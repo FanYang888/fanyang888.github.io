@@ -1,0 +1,747 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="../../../../img/fluid.png">
+  <link rel="icon" href="../../../../img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="杨帆">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="通过回调地狱问题引出promise，通过promise大量then方法引出async、await">
+<meta property="og:type" content="article">
+<meta property="og:title" content="promise-async与await">
+<meta property="og:url" content="http://example.com/2024/03/08/promise-async%E4%B8%8Eawait/index.html">
+<meta property="og:site_name" content="yangfan&#39;s blog">
+<meta property="og:description" content="通过回调地狱问题引出promise，通过promise大量then方法引出async、await">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2024/03/08/promise-async%E4%B8%8Eawait/635325a24b82fc2a4d93f680bc4716050a1b4c00.png@!web-article-pic.avif">
+<meta property="og:image" content="http://example.com/2024/03/08/promise-async%E4%B8%8Eawait/e88fe23f57f762727dbb830804611d1f8b0c2de3.png@!web-article-pic.avif">
+<meta property="og:image" content="http://example.com/2024/03/08/promise-async%E4%B8%8Eawait/d63f6b0479759c50fdfbce3e5e895e4e554ed7b0.png@!web-article-pic.avif">
+<meta property="og:image" content="http://example.com/2024/03/08/promise-async%E4%B8%8Eawait/6b9fca24a24a7a938a8a88a9b8090d6c0c4103f0.png@!web-article-pic.avif">
+<meta property="article:published_time" content="2024-03-08T02:06:29.000Z">
+<meta property="article:modified_time" content="2024-03-12T11:33:36.569Z">
+<meta property="article:author" content="杨帆">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2024/03/08/promise-async%E4%B8%8Eawait/635325a24b82fc2a4d93f680bc4716050a1b4c00.png@!web-article-pic.avif">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>promise-async与await - yangfan&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="../../../../css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="../../../../css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="../../../../css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="../../../../js/utils.js" ></script>
+  <script  src="../../../../js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 40vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="../../../../index.html">
+      <strong>Yangfan&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../index.html">
+                <i class="iconfont icon-home-fill"></i>
+                <span>主页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>链接</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('../../../../img/bg2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="promise-async与await"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-08 10:06" pubdate>
+          March 8, 2024 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.1k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          43 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">promise-async与await</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="1-回调地狱问题？"><a href="#1-回调地狱问题？" class="headerlink" title="1.回调地狱问题？"></a>1.回调地狱问题？</h2><p>回调地狱，就是异步调用获取到结果后，为下一个异步函数提供参数，所以就会一层一层的出现回调里面嵌入回调，导致层次很深，代码维护起来特别的复杂。</p>
+<p>如下案例所示。uniapp中request请求就是一个异步函数，需要依次 获取列表id &#x3D;》用列表id获取文章 &#x3D;》用文章id获取评论</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs vue">getData()&#123;<br>  //获取分类列表id<br>  uni.request(&#123;<br>    url:&quot;https://ku.qingnian8.com/dataApi/news/navlist.php&quot;,<br>    success:res=&gt;&#123;<br>      let id=res.data[0].id<br>      // 根据分类id获取该分类下的所有文章<br>      uni.request(&#123;<br>        url:&quot;https://ku.qingnian8.com/dataApi/news/newslist.php&quot;,<br>        data:&#123;<br>          cid:id<br>        &#125;,<br>        success:res2=&gt;&#123;<br>          //获取到一篇文章的id，根据文章id找到该文章下的评论<br>          let id=res2.data[0].id;<br>          uni.request(&#123;<br>            url:&quot;https://ku.qingnian8.com/dataApi/news/comment.php&quot;,<br>            data:&#123;<br>              aid:id<br>            &#125;,<br>            success:res3=&gt;&#123;<br>              //找到该文章下所有的评论<br>              console.log(res3)<br>            &#125;<br>          &#125;)<br>        &#125;<br>      &#125;)<br><br>    &#125;<br>  &#125;)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在ES6promise出现之前，上述问题的优化方法：将功能封装，然后嵌套调用（本质还是回调地狱）</p>
+<p>功能封装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs vue">methods: &#123;<br>    //先获取导航分类接口，将结果进行返回，到调用函数的地方获取<br>    getNav(callback)&#123;<br>      uni.request(&#123;<br>        url:&quot;https://ku.qingnian8.com/dataApi/news/navlist.php&quot;,<br>        success:res=&gt;&#123;<br>          callback(res)<br>        &#125;<br>      &#125;)<br>    &#125;,<br><br>    //获取文章数据，将文章列表进行返回<br>    getArticle(id,callback)&#123;<br>      uni.request(&#123;<br>        url:&quot;https://ku.qingnian8.com/dataApi/news/newslist.php&quot;,<br>        data:&#123;<br>          cid:id<br>        &#125;,<br>        success:res=&gt;&#123;<br>          callback(res)<br>        &#125;<br>      &#125;)<br>    &#125;,<br><br>      //获取文章下的所有评论<br>      getComment(id,callback)&#123;<br>        uni.request(&#123;<br>          url:&quot;https://ku.qingnian8.com/dataApi/news/comment.php&quot;,<br>          data:&#123;<br>            aid:id<br>          &#125;,<br>          success:res=&gt;&#123;<br>            callback(res)<br>          &#125;<br>        &#125;)<br>      &#125;<br>&#125; <br></code></pre></td></tr></table></figure>
+
+<p>功能调用：本质还是多层嵌套，没有解决回调地狱，但是代码可读性变高了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs vue">//在onload初始化后调用相应的函数<br>onLoad() &#123;<br>  //调用导航函数，并拿到函数的返回值<br>  this.getNav(res=&gt;&#123;<br>    let id=res.data[0].id;<br>    //拿到分类id作为参数<br>    this.getArticle(id,res2=&gt;&#123;<br>      //拿到文章id作为参数<br>      let id=res2.data[0].id;<br>      this.getComment(id,res3=&gt;&#123;<br>        //最终获取到第一个分类下，第一篇文章下，所有评论<br>        console.log(res3)<br>      &#125;)<br>    &#125;)<br>  &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="2-ES6-Promise"><a href="#2-ES6-Promise" class="headerlink" title="2.ES6-Promise"></a>2.ES6-Promise</h2><p>promise是<strong>解决异步</strong>的方法，本质上是一个<em><strong>构造函数</strong></em>，可以用它实例化一个对象。</p>
+<p><strong>对象</strong>身上有resolve、reject、all，<strong>原型</strong>上有then、catch方法。</p>
+<p>我们可以利用<code>console.dir(Promise)</code>查看其构造函数本身的方法以及原型上的方法。</p>
+<p><img src="635325a24b82fc2a4d93f680bc4716050a1b4c00.png@!web-article-pic.avif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>promise对象有三种状态：pending（初识状态&#x2F;进行中）、fulfilled（成功）、rejected（失败）</p>
+<ol>
+<li><p>pending。它的意思是 “待定的，将发生的”，相当于是一个初始状态。创建Promise对象时，且没有调用resolve或者是reject方法，相当于是初始状态。这个初始状态会随着你调用resolve，或者是reject函数而切换到另一种状态。 </p>
+<p><img src="e88fe23f57f762727dbb830804611d1f8b0c2de3.png@!web-article-pic.avif" srcset="/img/loading.gif" lazyload alt="img"></p>
+</li>
+<li><p>fulfilled(或resolved)。表示解决了，就是说这个承诺实现了。 要实现从pending到fulfilled(或resolved)的转变，需要在 创建Promise对象时，在函数体中调用了resolve方法。</p>
+<p><img src="d63f6b0479759c50fdfbce3e5e895e4e554ed7b0.png@!web-article-pic.avif" srcset="/img/loading.gif" lazyload alt="img"></p>
+</li>
+<li><p>rejected。拒绝，失败。表示这个承诺没有做到，失败了。要实现从pending到rejected的转换，只需要在创建Promise对象时，调用reject函数。</p>
+<p><img src="6b9fca24a24a7a938a8a88a9b8090d6c0c4103f0.png@!web-article-pic.avif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<br></li>
+</ol>
+<h3 id="利用promise解决回调地狱问题。"><a href="#利用promise解决回调地狱问题。" class="headerlink" title="利用promise解决回调地狱问题。"></a>利用promise解决回调地狱问题。</h3><p>封装功能，每个函数都返回一个promise对象，只有promise对象才有.then方法，才能链式调用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs vue">methods: &#123;<br>    //先获取导航分类接口，将结果进行返回，到调用函数的地方获取<br>    getNav(callback)&#123;<br>      return new Promise((resolve,reject)=&gt;&#123;   //返回值为一个promise对象，只有promise对象才有.then方法，才能链式调用<br>        uni.request(&#123;<br>          url:&quot;https://ku.qingnian8.com/dataApi/news/navlist.php&quot;,<br>          success:res=&gt;&#123;<br>            resolve(res)        //成功回调：执行resolve方法   pending -&gt; fulfilled<br>          &#125;,<br>          fail:err=&gt;&#123;<br>            reject(err)         //失败回调：执行reject方法    pending -&gt; rejected<br>          &#125;<br>        &#125;)<br>      &#125;)<br>    &#125;,<br><br><br>    //获取文章数据，将文章列表进行返回<br>    getArticle(id)&#123;<br>      return new Promise((resolve,reject)=&gt;&#123;    //返回值为一个promise对象，只有promise对象才有.then方法，才能链式调用<br>        uni.request(&#123;<br>          url:&quot;https://ku.qingnian8.com/dataApi/news/newslist.php&quot;,<br>          data:&#123;<br>            cid:id<br>          &#125;,<br>          success:res=&gt;&#123;<br>            resolve(res)<br>          &#125;,<br>          fail:err=&gt;&#123;<br>            reject(err)<br>          &#125;<br>        &#125;)<br>      &#125;)<br>    &#125;,<br><br>      //获取文章下的所有评论<br>      getComment(id)&#123;<br>        return new Promise((resolve,reject)=&gt;&#123;  //返回值为一个promise对象，只有promise对象才有.then方法，才能链式调用<br>          uni.request(&#123;<br>            url:&quot;https://ku.qingnian8.com/dataApi/news/comment.php&quot;,<br>            data:&#123;<br>              aid:id<br>            &#125;,<br>            success:res=&gt;&#123;<br>              resolve(res)<br>            &#125;,<br>            fail:err=&gt;&#123;<br>              reject(err)<br>            &#125;<br>          &#125;)<br>        &#125;)<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>.then链式调用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs vue">this.getNav()<br>.then(res=&gt;&#123;<br>  let id=res.data[0].id;<br>  return this.getArticle(id);  //返回promise对象<br>&#125;)<br>.then(res=&gt;&#123;<br>  let id=res.data[0].id;<br>  return this.getComment(id)<br>&#125;)<br>.then(res=&gt;&#123;<br>  console.log(res)<br>&#125;) <br>.catch(err=&gt;&#123;<br>  console.log(err)<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>promise的优点：解决了回调地狱的问题，增强了代码的可读性。</p>
+<p>promise的缺点：大量then的使用。&#x3D;》es7 async、await</p>
+<br>
+
+<h2 id="3-ES7-async、await-异步处理同步化"><a href="#3-ES7-async、await-异步处理同步化" class="headerlink" title="3.ES7-async、await 异步处理同步化"></a>3.ES7-async、await 异步处理同步化</h2><p>定义：</p>
+<p><code>async 是异步的意思，await则可以理解为 async wait。所以可以理解async就是用来声明一个异步方法，而 await是用来等待异步方法执行 async作为一个关键字放在函数前面，表示该函数是一个异步函数，异步函数意味着该函数的执行不会阻塞后面代码的执行；而 await 用于等待一个异步方法执行完成； await 等待一个 Promise 对象，如果 Promise的状态变成了 resolve 或者 rejcet，那么 async函数会恢复执行。并会阻塞该函数内后面的代码。 使用 async/await 可以实现用同步代码的风格来编写异步代码，这是因为 async/await 的基础技术使用了生成器和 Promise，生成器是协程的实现，利用生成器能实现生成器函数的暂停和恢复。 为了优化 .then 链而开发出来的。</code></p>
+<p>async和await必须成对出现，如果只有await会报错，如果只有async不会报错，但也没效果</p>
+<p>使用方法：上述2中，.then方法利用async、await来优化</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs vue">async onLoad() &#123;<br>  let id,res;<br>  res=await this.getNav();   //await等待的是一个promise对象<br>  id=res.data[0].id;<br>  res=await this.getArticle(id);<br>  id=res.data[0].id;<br>  res=await this.getComment(id);<br>  console.log(res)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>关于async、await详细讲解见此博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45811256/article/details/123638582?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522170986334516800184170309%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=170986334516800184170309&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-123638582-null-null.142%5Ev99%5Econtrol&utm_term=async%20await&spm=1018.2226.3001.4187">https://blog.csdn.net/weixin_45811256/article/details/123638582?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522170986334516800184170309%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=170986334516800184170309&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-123638582-null-null.142^v99^control&amp;utm_term=async%20await&amp;spm=1018.2226.3001.4187</a></p>
+<p>本文参考：作者：咸虾米_ <a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv18799030/">https://www.bilibili.com/read/cv18799030/</a> 出处：bilibili</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="../../../../categories/javascript/" class="category-chain-item">javascript</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>promise-async与await</div>
+      <div>http://example.com/2024/03/08/promise-async与await/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>杨帆</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>March 8, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="../../12/react%E4%B8%AD%E7%8A%B6%E6%80%81%E6%9B%B4%E6%96%B0%E5%8F%8AImmer/" title="react中状态更新及Immer">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">react中状态更新及Immer</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="../../06/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/" title="前端面试题">
+                        <span class="hidden-mobile">前端面试题</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      
+
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Views: 
+        <span id="busuanzi_value_site_pv"></span>
+        
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Visitors: 
+        <span id="busuanzi_value_site_uv"></span>
+        
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      京ICP证123456号
+    </a>
+  </span>
+  
+    
+      <span>
+        <a
+          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=12345678"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="../../../../img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+          
+          <span>京公网安备12345678号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="../../../../js/events.js" ></script>
+<script  src="../../../../js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="../../../../js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="../../../../js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="../../../../js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

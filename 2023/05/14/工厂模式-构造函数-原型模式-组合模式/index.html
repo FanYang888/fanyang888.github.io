@@ -1,0 +1,776 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="../../../../img/fluid.png">
+  <link rel="icon" href="../../../../img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="杨帆">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="js设计模式：该文章中主要解释JavaScript中工厂模式、构造函数、函数原型和组合模式之间的区别与联系">
+<meta property="og:type" content="article">
+<meta property="og:title" content="工厂模式&amp;构造函数&amp;原型模式&amp;组合模式">
+<meta property="og:url" content="http://example.com/2023/05/14/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="yangfan&#39;s blog">
+<meta property="og:description" content="js设计模式：该文章中主要解释JavaScript中工厂模式、构造函数、函数原型和组合模式之间的区别与联系">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/05/14/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/image-20230516145743440.png">
+<meta property="og:image" content="http://example.com/2023/05/14/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/image-20230516150251094.png">
+<meta property="og:image" content="http://example.com/2023/05/14/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/image-20230516150721747.png">
+<meta property="article:published_time" content="2023-05-14T06:26:11.000Z">
+<meta property="article:modified_time" content="2023-05-16T08:28:10.000Z">
+<meta property="article:author" content="杨帆">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/05/14/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/image-20230516145743440.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>工厂模式&amp;构造函数&amp;原型模式&amp;组合模式 - yangfan&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="../../../../css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="../../../../css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="../../../../css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="../../../../js/utils.js" ></script>
+  <script  src="../../../../js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 40vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="../../../../index.html">
+      <strong>Yangfan&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../index.html">
+                <i class="iconfont icon-home-fill"></i>
+                <span>主页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>链接</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('../../../../img/bg2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="工厂模式&amp;构造函数&amp;原型模式&amp;组合模式"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-14 14:26" pubdate>
+          May 14, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.6k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          47 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">工厂模式&amp;构造函数&amp;原型模式&amp;组合模式</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2>1.js面向对象程序</h2>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> o1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br>    o1.<span class="hljs-property">name</span> = <span class="hljs-string">&quot;张三&quot;</span>;<br>    o1.<span class="hljs-property">sex</span> = <span class="hljs-string">&quot;男&quot;</span>;<br>    o1.<span class="hljs-property">age</span> = <span class="hljs-string">&quot;27&quot;</span>;<br>o1.<span class="hljs-property">msg</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;姓名：&quot;</span>+<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>+<span class="hljs-string">&quot;  性别：&quot;</span>+<span class="hljs-variable language_">this</span>.<span class="hljs-property">sex</span>+<span class="hljs-string">&quot;  年龄：&quot;</span>+<span class="hljs-variable language_">this</span>.<span class="hljs-property">age</span>);<br>&#125;<br> <br><span class="hljs-keyword">var</span> o2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br>    o2.<span class="hljs-property">name</span> = <span class="hljs-string">&quot;李四&quot;</span>;<br>    o2.<span class="hljs-property">sex</span> = <span class="hljs-string">&quot;女&quot;</span>;<br>    o2.<span class="hljs-property">age</span> = <span class="hljs-string">&quot;20&quot;</span>;<br>o2.<span class="hljs-property">msg</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;姓名：&quot;</span>+<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>+<span class="hljs-string">&quot;  性别：&quot;</span>+<span class="hljs-variable language_">this</span>.<span class="hljs-property">sex</span>+<span class="hljs-string">&quot;  年龄：&quot;</span>+<span class="hljs-variable language_">this</span>.<span class="hljs-property">age</span>);<br>&#125;<br><span class="hljs-comment">//调用对象下面方法</span><br>o1.<span class="hljs-title function_">msg</span>();<br>o2.<span class="hljs-title function_">msg</span>();<br></code></pre></td></tr></table></figure>
+
+<p>Q1： 如何让代码复用？</p>
+<p>answer：为了解决这个，产生了JavaScript设计模式。</p>
+<br>
+
+<h2>2.工厂模式</h2>
+
+<p>Q1: 什么是工厂模式？</p>
+<p>answer：工厂模式是一种众所周知的设计模式，广泛应用于软件工程领域，用于抽象创建特定对象的过程。工厂模式是一种创建型模式，简单来说，工厂模式就是创建对象的一种方式。</p>
+<p>Q2: 工厂模式有什么用？</p>
+<p>answer： 作用：创建对象；降低代码冗余度。</p>
+<p>应用场景：当你想要批量生产同种类的对象的时候；比如，你想生成一个班级的40个学生，每个学生都有姓名、年龄等特征。这时候你创建一个“工厂”，把信息丢到工厂里，工厂就给你造一个人出来，非常方便。</p>
+<p>使用工厂模式的方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">//将创建对象的代码封装在一个函数中</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">createPerson</span>(<span class="hljs-params">name, age, gender</span>) &#123;<br>  <span class="hljs-keyword">var</span> person = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br>  person.<span class="hljs-property">name</span> = name;<br>  person.<span class="hljs-property">age</span> = age;<br>  person.<span class="hljs-property">gender</span> = gender;<br>  person.<span class="hljs-property">sayName</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>);<br>  &#125;<br>  <span class="hljs-keyword">return</span> person;<br>&#125;<br><span class="hljs-comment">//利用工厂函数来创建对象</span><br><span class="hljs-keyword">var</span> person1 = <span class="hljs-title function_">createPerson</span>(<span class="hljs-string">&quot;张三&quot;</span>, <span class="hljs-number">17</span>, <span class="hljs-string">&#x27;male&#x27;</span>);<br><span class="hljs-keyword">var</span> person2 = <span class="hljs-title function_">createPerson</span>(<span class="hljs-string">&quot;李四&quot;</span>, <span class="hljs-number">20</span>, <span class="hljs-string">&#x27;female&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<p><font color = 'yellow'>优点：</font>只要我们往工厂函数里面塞参数，工厂函数就会像生产产品一样造个人出来，并且可以比较方便的一次创建多个具有相同属性的对象。</p>
+<p><font color = 'yellow'>缺点：</font>这种方式本质上是将创建对象的过程进行了封装，本质并没有改变，我们创建一个student时无法知道其具体的数据类型，只知道这是一个对象，无法知道我们创建的对象和系统对象有什么区别，但是往往实际开发中我们需要确定这个对象到底是个Person的实例还是Dog的实例。</p>
+<p><strong>为了解决这个：我们需要在外面new一个函数就可以了，这就引出了js另一种设计模式：构造函数模式</strong></p>
+<h2>3.构造函数</h2>
+
+<p>构造函数的特点：</p>
+<ul>
+<li>构造函数有原型对象prototype</li>
+<li>构造函数原型对象prototype里面有constructor指向构造函数本身</li>
+<li>构造函数可以通过原型对象添加方法</li>
+<li>构造函数创建的实例对象有_proto_原型指向构造函数的原型对象。即<code>new Father().__proto__ === Father.prototype</code></li>
+</ul>
+<p>构造函数的使用方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 自定义构造函数  规定：构造函数首字母大写</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">Person</span>(<span class="hljs-params">name, age, gender</span>) &#123;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = name;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">age</span> = age;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">gender</span> = gender;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">sayName</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>);<br>  &#125;<br>&#125;<br><span class="hljs-comment">//要创建 Person 的实例，应使用 new 操作符。</span><br><span class="hljs-keyword">var</span> person1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&#x27;张三&#x27;</span>, <span class="hljs-number">17</span>, <span class="hljs-string">&#x27;male&#x27;</span>); <span class="hljs-comment">//调用构造函数以后会执行以下四步：</span><br><span class="hljs-keyword">var</span> person2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&#x27;李四&#x27;</span>, <span class="hljs-number">19</span>, <span class="hljs-string">&#x27;female&#x27;</span>);<br><br>person1.<span class="hljs-title function_">sayName</span>(); <span class="hljs-comment">// 张三</span><br>person2.<span class="hljs-title function_">sayName</span>(); <span class="hljs-comment">// 李四</span><br><br><span class="hljs-comment">//instanceof运算符用于检测构造函数的 prototype` 属性是否出现在某个实例对象的原型链上。或者说判断一个对象是某个对象的实例。</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(person1 <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Object</span>); <span class="hljs-comment">// true  person1是 Object 的实例，同时也是 Person 的实例</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(person1 <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Person</span>); <span class="hljs-comment">// true </span><br></code></pre></td></tr></table></figure>
+
+<p>(1) 在内存中创建一个新对象。</p>
+<p>(2) 这个新对象内部的[[Prototype]] 特性被赋值为构造函数的 prototype 属性。</p>
+<p>(3) 构造函数内部的 this 被赋值为这个新对象（即 this 指向新对象）。</p>
+<p>(4) 执行构造函数内部的代码（给新对象添加属性）。</p>
+<p>(5) 如果构造函数返回非空对象，则返回该对象；否则，返回刚创建的新对象。</p>
+<br>
+
+<p><font color='yellow'>构造函数的主要问题</font>在于，其定义的方法会在每个实例上都创建一遍。因此对前面的案例而言，person1 和 person2 都有名为 sayName()的方法，但这两个方法不是同一个 Function 实例,<font color='red'>存在浪费内存的问题</font>我们知道，ECMAScript 中的函数是对象，因此每次定义函数时，都会初始化一个对象。逻辑上讲，这个构造函数实际上是这样的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Person</span>(<span class="hljs-params">name, age, gender</span>) &#123;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = name;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">age</span> = age;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">gender</span> = gender;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">sayName</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Function</span>(<span class="hljs-string">&quot;console.log(this.name)&quot;</span>); <span class="hljs-comment">// 逻辑等价</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Q3: 如何在提供性能？？也就是让公用的属性和方法在内存中只存在一份？？</p>
+<p><strong>answer: 这里用到js设计模式中另外一种模式：原型模式。就是将公用的属性和方法加载在原型上（prototype</strong>）</p>
+<h2>4.原型模式</h2>
+
+<p>1.原型是什么？</p>
+<p>原型是一个对象，我们也称prototype为原型对象。</p>
+<p>2.原型的作用是什么？</p>
+<p>答：共享方法。</p>
+<p>原型模式的使用方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Person</span>(<span class="hljs-params"></span>)&#123;&#125;<br><span class="hljs-title class_">Person</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">name</span> = <span class="hljs-string">&quot;张三&quot;</span>;<br><span class="hljs-title class_">Person</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">sex</span> = <span class="hljs-string">&quot;男&quot;</span>;<br><span class="hljs-title class_">Person</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">age</span> = <span class="hljs-string">&quot;10&quot;</span>;<br><span class="hljs-title class_">Person</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">msg</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;姓名：&quot;</span>+<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>+<span class="hljs-string">&quot;  性别：&quot;</span>+<span class="hljs-variable language_">this</span>.<span class="hljs-property">sex</span>+<span class="hljs-string">&quot;  年龄：&quot;</span>+<span class="hljs-variable language_">this</span>.<span class="hljs-property">age</span>);<br>&#125;<br><span class="hljs-keyword">var</span> person1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(person1) <span class="hljs-comment">//对象身上系统添加一个 _proto_ 指向我们构造函数的原型对象 prototype</span><br>person1.<span class="hljs-title function_">msg</span>();<br><span class="hljs-keyword">var</span> person2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>();<br>person2.<span class="hljs-property">name</span> = <span class="hljs-string">&quot;李四&quot;</span>;<br>person2.<span class="hljs-title function_">msg</span>();<br></code></pre></td></tr></table></figure>
+
+<p>原型模式导致的问题：</p>
+<p>（1）它弱化了向构造函数传递初始化参数的能力，会导致所有实例默认都取得相同的属性值。</p>
+<p>（2）原型上的所有属性是在实例间共享的（这对于一些相同的函数是优点，但是对于属性值就是缺点了，但一般来说，不同的实例应该有属于自己的属性副本。例子如下）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Person</span>(<span class="hljs-params"></span>) &#123; &#125;  <span class="hljs-comment">//构造函数</span><br><span class="hljs-title class_">Person</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> = &#123;<br>  <span class="hljs-attr">constructor</span>: <span class="hljs-title class_">Person</span>,  <span class="hljs-comment">//如果我们修改了原来的原型对象，即按此方法将原型赋值一个对象，则必须手动利用constructor指回原来的构造函数。</span><br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;zhangsan&quot;</span>,<br>  <span class="hljs-attr">friends</span>: [<span class="hljs-string">&quot;lisi&quot;</span>, <span class="hljs-string">&quot;wangwu&quot;</span>],<br>  <span class="hljs-title function_">sayName</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>);<br>  &#125;<br>&#125;;<br><span class="hljs-keyword">var</span> person1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>();<br><span class="hljs-keyword">var</span> person2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>();  <span class="hljs-comment">//缺点一：person1和person2初始化的参数都相同。</span><br>person1.<span class="hljs-property">friends</span>.<span class="hljs-title function_">push</span>(<span class="hljs-string">&quot;zhaoliu&quot;</span>); <span class="hljs-comment">//缺点二：由于原型上的friends也是共享的，所以更改person1的friends也会导致person2的friends改变。</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(person1.<span class="hljs-property">friends</span>); <span class="hljs-comment">// [ &#x27;lisi&#x27;, &#x27;wangwu&#x27;, &#x27;zhaoliu&#x27; ]</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(person2.<span class="hljs-property">friends</span>); <span class="hljs-comment">// [ &#x27;lisi&#x27;, &#x27;wangwu&#x27;, &#x27;zhaoliu&#x27; ]</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(person1.<span class="hljs-property">friends</span> === person2.<span class="hljs-property">friends</span>); <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+
+<p>为了既要高度复用方法函数，又要保证实例化对象都有各自的属性副本，<strong>所以产生了组合模式：（构造函数+原型模式）构造函数用于定义实例属性，原型模式用于定义方法和共享属性。</strong></p>
+<h2>5.混合模式</h2>
+
+<p>混合模式使用方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Person</span>(<span class="hljs-params">name, age, gender</span>) &#123;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = name;   <span class="hljs-comment">//构造函数中this指向对象实例</span><br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">age</span> = age;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">gender</span> = gender;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">firends</span> = [<span class="hljs-string">&#x27;zhangsan&#x27;</span>, <span class="hljs-string">&#x27;lisi&#x27;</span>];<br>&#125;<br>person.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">sayName</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>) <span class="hljs-comment">//原型对象函数里面的this指向对象实例</span><br>&#125;<br><br><span class="hljs-comment">// Person.prototype = &#123;    //原型模式用于定义方法和共享属性</span><br><span class="hljs-comment">//  constructor: Person,   ////如果我们修改了原来的原型对象，即按此方法将原型赋值一个对象，则必须手动利用constructor指回原来的构造函数。</span><br><span class="hljs-comment">//  sayName: function () &#123;</span><br><span class="hljs-comment">//    console.log(this.name);</span><br><span class="hljs-comment">//  &#125;</span><br><span class="hljs-comment">//&#125;;</span><br><span class="hljs-keyword">var</span> p1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&#x27;larry&#x27;</span>, <span class="hljs-number">44</span>, <span class="hljs-string">&#x27;male&#x27;</span>); <span class="hljs-comment">//构造函数用于定义实例属性</span><br><span class="hljs-keyword">var</span> p2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&#x27;terry&#x27;</span>, <span class="hljs-number">39</span>, <span class="hljs-string">&#x27;male&#x27;</span>);<br><br>p1.<span class="hljs-property">firends</span>.<span class="hljs-title function_">push</span>(<span class="hljs-string">&#x27;robin&#x27;</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(p1.<span class="hljs-property">firends</span>); <span class="hljs-comment">// [ &#x27;zhangsan&#x27;, &#x27;lisi&#x27;, &#x27;robin&#x27; ]</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(p2.<span class="hljs-property">firends</span>); <span class="hljs-comment">// [ &#x27;zhangsan&#x27;, &#x27;lisi&#x27; ]</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(p1.<span class="hljs-property">firends</span> === p2.<span class="hljs-property">firends</span>); <span class="hljs-comment">// false</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(p1.<span class="hljs-property">sayName</span> === p2.<span class="hljs-property">sayName</span>); <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+
+<p>JavaScript在es6才出现class类的写法，类的本质也就是构造函数，上述功能代码在es6中可以这样写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> &#123;<br>    <span class="hljs-comment">//构造函数用于定义实例属性</span><br>    <span class="hljs-title function_">constructor</span>(<span class="hljs-params">name, age, gender</span>)&#123;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = name;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">age</span> = age;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">gender</span> = gender;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">firends</span> = [<span class="hljs-string">&#x27;zhangsan&#x27;</span>, <span class="hljs-string">&#x27;lisi&#x27;</span>];<br>    &#125;<br>    <span class="hljs-comment">//共有方法</span><br>    <span class="hljs-title function_">sayName</span>(<span class="hljs-params"></span>)&#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>构造函数、实例、原型对象三者之间的关系</p>
+<p><img src="image-20230516145743440.png" srcset="/img/loading.gif" lazyload alt="image-20230516145743440"></p>
+<h2 id="附：原型链"><a href="#附：原型链" class="headerlink" title="附：原型链"></a>附：原型链</h2><p><img src="image-20230516150251094.png" srcset="/img/loading.gif" lazyload alt="image-20230516150251094"></p>
+<p><img src="image-20230516150721747.png" srcset="/img/loading.gif" lazyload alt="image-20230516150721747"></p>
+<p>原型的作用：</p>
+<p>扩展内置对象方法：</p>
+<p>例如：Array数组原型本身没有求和方法，但是可以通过自定义添加扩展该方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> arr = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arr.<span class="hljs-title function_">sum</span>())  <span class="hljs-comment">//error 没有sum方法</span><br><br><span class="hljs-keyword">var</span> sum = <span class="hljs-number">0</span>;<br><span class="hljs-title class_">Array</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">sum</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span> ;i&lt;<span class="hljs-variable language_">this</span>.<span class="hljs-property">length</span>;i++) &#123;<br>        sum += <span class="hljs-variable language_">this</span>[i];<br>    &#125;<br>    <span class="hljs-keyword">return</span> sum;<br>&#125;<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arr.<span class="hljs-title function_">sum</span>())  <span class="hljs-comment">//6</span><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="../../../../categories/javascript/" class="category-chain-item">javascript</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>工厂模式&amp;构造函数&amp;原型模式&amp;组合模式</div>
+      <div>http://example.com/2023/05/14/工厂模式-构造函数-原型模式-组合模式/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>杨帆</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>May 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="../../15/%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0%E7%AC%A6-Object-defineProperty/" title="属性描述符_Object.defineProperty">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">属性描述符_Object.defineProperty</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="../../10/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%98%AF%E5%A6%82%E4%BD%95%E6%B8%B2%E6%9F%93%E9%A1%B5%E9%9D%A2%E7%9A%84/" title="浏览器是如何渲染页面的">
+                        <span class="hidden-mobile">浏览器是如何渲染页面的</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      
+
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Views: 
+        <span id="busuanzi_value_site_pv"></span>
+        
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Visitors: 
+        <span id="busuanzi_value_site_uv"></span>
+        
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      京ICP证123456号
+    </a>
+  </span>
+  
+    
+      <span>
+        <a
+          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=12345678"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="../../../../img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+          
+          <span>京公网安备12345678号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="../../../../js/events.js" ></script>
+<script  src="../../../../js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="../../../../js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="../../../../js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="../../../../js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,756 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="../../../../img/fluid.png">
+  <link rel="icon" href="../../../../img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="杨帆">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="闭包及其作用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="闭包及其案例">
+<meta property="og:url" content="http://example.com/2023/05/24/%E9%97%AD%E5%8C%85%E5%8F%8A%E5%85%B6%E6%A1%88%E4%BE%8B/index.html">
+<meta property="og:site_name" content="yangfan&#39;s blog">
+<meta property="og:description" content="闭包及其作用">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/05/24/%E9%97%AD%E5%8C%85%E5%8F%8A%E5%85%B6%E6%A1%88%E4%BE%8B/image-20240307201556967.png">
+<meta property="article:published_time" content="2023-05-24T07:05:26.000Z">
+<meta property="article:modified_time" content="2024-03-07T12:16:24.192Z">
+<meta property="article:author" content="杨帆">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/05/24/%E9%97%AD%E5%8C%85%E5%8F%8A%E5%85%B6%E6%A1%88%E4%BE%8B/image-20240307201556967.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>闭包及其案例 - yangfan&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="../../../../css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="../../../../css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="../../../../css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="../../../../js/utils.js" ></script>
+  <script  src="../../../../js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 40vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="../../../../index.html">
+      <strong>Yangfan&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../index.html">
+                <i class="iconfont icon-home-fill"></i>
+                <span>主页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>链接</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('../../../../img/bg2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="闭包及其案例"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-24 15:05" pubdate>
+          May 24, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.8k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          32 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">闭包及其案例</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="1-什么是闭包"><a href="#1-什么是闭包" class="headerlink" title="1 什么是闭包"></a>1 什么是闭包</h2><p>MDN:<code>闭包（closure）是一个函数以及其捆绑的周边环境状态的引用的组合。换而言之，闭包让开发者可以从内部函数访问外部函数的作用域。在 JavaScript 中，闭包会随着函数的创建而被同时创建。</code></p>
+<p>换言之：<font color = 'yellow'> 闭包就是一个函数，这个函数能够访问其他函数的作用域中的变量。</font></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">outer</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">var</span> inner = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a)<br>    &#125;<br>    <span class="hljs-keyword">return</span> inner <span class="hljs-comment">//inner就是一个闭包，因为能够访问outer函数作用域中的变量</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-闭包的特性"><a href="#2-闭包的特性" class="headerlink" title="2 闭包的特性"></a>2 闭包的特性</h2><p>相较于全局变量和局部变量，闭包有以下两个特性：</p>
+<ul>
+<li>函数嵌套函数；</li>
+<li>内部函数可以访问外部函数的变量；</li>
+<li>持久性：被访问的参数和变量不会被JavaScript垃圾回收机制回收（不会被销毁）。一般的函数，调用完毕之后，系统自动注销函数，而对于闭包来说，在外部函数被调用之后，闭包结构依然保存在系统中，闭包中的数据依然存在，从而实现对数据的持久使用。闭包拥有全局变量的不被释放的特点。</li>
+</ul>
+<h2 id="3-闭包的优缺点"><a href="#3-闭包的优缺点" class="headerlink" title="3 闭包的优缺点"></a>3 闭包的优缺点</h2><p><strong>优点：</strong></p>
+<ul>
+<li>可以让一个变量长期在内存中不被释放（用的太多就变成了缺点，占内存）。</li>
+<li>避免全局变量的污染，和全局变量不同，闭包中的变量无法被外部使用。</li>
+<li>保护函数内的变量安全；加强<strong>封装性</strong>，可以达到对变量的保护作用，如果在闭包内声明变量，外界是无法访问的，除非闭包主动向外界提供访问接口</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>常驻内存，会增大内存使用量，使用不当很容易造成内存泄露。</li>
+<li>内存浪费问题，这个内存浪费不仅仅因为它常驻内存，更重要的是，对闭包的使用不当会造成无效内存的产生。</li>
+</ul>
+<h2 id="4-闭包的作用"><a href="#4-闭包的作用" class="headerlink" title="4 闭包的作用"></a>4 闭包的作用</h2><p>闭包主要在三个方面应用：防抖、节流、函数柯里化</p>
+<p><strong>1.防抖：</strong></p>
+<p>原理：利用闭包的特性（用到的变量不会被js垃圾回收机制回收）来保存接收定时器的变量</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">//防抖 避免函数的重复调用 只会调用一次</span><br>        <span class="hljs-keyword">function</span> <span class="hljs-title function_">Antishake</span>(<span class="hljs-params">fn,wait</span>)&#123; <span class="hljs-comment">//第一个参数是函数 第二个参数是毫秒值</span><br>            <span class="hljs-keyword">let</span> timer = <span class="hljs-literal">null</span> <span class="hljs-comment">//声明一个变量来接收延时器 初始值为null</span><br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>                <span class="hljs-built_in">clearTimeout</span>(timer)<br>                timer = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>                    <span class="hljs-title function_">fn</span>() <span class="hljs-comment">//调用这函数</span><br>                &#125;, wait);<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">let</span> an = <span class="hljs-title class_">Antishake</span>(<br>            <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-comment">//用一个变量接收</span><br>            	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;555&#x27;</span>);<br>        	&#125;,<span class="hljs-number">2000</span>)<br>        <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&quot;button&quot;</span>).<span class="hljs-property">onclick</span> = <span class="hljs-function">() =&gt;</span> &#123;<br>        	<span class="hljs-title function_">an</span>(); <br>      	&#125;; <span class="hljs-comment">//连续多次点击，也只会最后一次点击结束后过三秒打印555.</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>2.节流：</strong></p>
+<p>原理：利用闭包的特性（用到的变量不会被js垃圾回收机制回收）来保存时间</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">throttle</span>(<span class="hljs-params">fn,wait</span>)&#123;<br>            <span class="hljs-keyword">let</span> timer = <span class="hljs-literal">null</span> <span class="hljs-comment">//节点闸</span><br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>                <span class="hljs-keyword">if</span>(timer) <span class="hljs-keyword">return</span> <span class="hljs-comment">//null false 不是null结果减少true 如果上传没有我就直接跳过 没有人我就上去</span><br>                timer = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123; <span class="hljs-comment">//上车了</span><br>                    <span class="hljs-title function_">fn</span>()<br>                    timer = <span class="hljs-literal">null</span> <span class="hljs-comment">//做完之后重新关闭节点闸</span><br>                &#125;, wait);<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">let</span> throttle1 = <span class="hljs-title function_">throttle</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>            <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;我上车了&#x27;</span>);<br>        &#125;,<span class="hljs-number">2000</span>)<br>        <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;div&#x27;</span>).<span class="hljs-property">onclick</span> = <span class="hljs-function">()=&gt;</span>&#123;<br>            <span class="hljs-title function_">throttle1</span>()<br>        &#125;<br></code></pre></td></tr></table></figure>
+
+<p>防抖避免重复执行 只执行一次</p>
+<p>节流 减少执行次数 执行多次</p>
+<p>案例：窗口大小改变执行操作：</p>
+<p><img src="image-20240307201556967.png" srcset="/img/loading.gif" lazyload alt="image-20240307201556967"></p>
+<p><strong>3.函数柯里化：</strong></p>
+<p>1. </p>
+<p>后续补充。。。</p>
+<h2 id="5-闭包的经典案例"><a href="#5-闭包的经典案例" class="headerlink" title="5 闭包的经典案例"></a>5 闭包的经典案例</h2><p>1.点击标签，打印出索引值，用闭包模仿块级作用域</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>11111<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>11111<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>11111<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">//大多数人以为是：</span><br><span class="hljs-keyword">var</span> lis = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelectorAll</span>(<span class="hljs-string">&quot;li&quot;</span>)<br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>;i &lt; lis.<span class="hljs-property">length</span>;i++)&#123;<br>    lis[i].<span class="hljs-property">onclick</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(i)<br>    &#125;<br>&#125;<br><span class="hljs-comment">//实际结果不管点击哪个都是打印 3</span><br><span class="hljs-comment">//原因：事件的执行函数是异步的，它只会在浏览器有空闲的时候执行。点击的时候，for循环已经遍历完了。</span><br><span class="hljs-comment">//Q1：为什么for循环遍历完了打印的是3，而不是2？</span><br><span class="hljs-comment">//answer：当循环事件完成的时候，i已经自增到3了，i为2的时候还在循环。</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">//利用闭包实现正确的方法：</span><br><span class="hljs-keyword">var</span> lis = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelectorAll</span>(<span class="hljs-string">&quot;li&quot;</span>)<br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>;i &lt; lis.<span class="hljs-property">length</span>;i++)&#123;<br>    <span class="hljs-comment">//利用for循环创建4个立即执行函数</span><br>    (<span class="hljs-keyword">function</span> (<span class="hljs-params">a</span>)&#123;<br>		lis[a].<span class="hljs-property">onclick</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>            <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a)<br>        &#125;        <br>    &#125;)(i)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>注：ES6中用let定义i同样能实现该效果。</p>
+<p>2.用闭包解决递归调用问题：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span>  <span class="hljs-title function_">factorial</span>(<span class="hljs-params">num</span>) &#123;<br>   <span class="hljs-keyword">if</span>(num&lt;= <span class="hljs-number">1</span>) &#123;<br>       <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>   &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-keyword">return</span> num * <span class="hljs-title function_">factorial</span>(num-<span class="hljs-number">1</span>)<br>   &#125;<br>&#125;<br><span class="hljs-keyword">var</span> anotherFactorial = factorial<br>factorial = <span class="hljs-literal">null</span><br><span class="hljs-title function_">anotherFactorial</span>(<span class="hljs-number">4</span>)   <span class="hljs-comment">// 报错 ，因为最好是return num* arguments.callee（num-1），arguments.callee指向当前执行函数，但是在严格模式下不能使用该属性也会报错，所以借助闭包来实现</span><br><br><br><span class="hljs-comment">// 使用闭包实现递归</span><br><span class="hljs-keyword">function</span> newFactorial = （<span class="hljs-keyword">function</span> <span class="hljs-title function_">f</span>(<span class="hljs-params">num</span>)&#123;<br>    <span class="hljs-keyword">if</span>(num&lt;<span class="hljs-number">1</span>) &#123;<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>&#125;<br>    <span class="hljs-keyword">else</span> &#123;<br>       <span class="hljs-keyword">return</span> num* <span class="hljs-title function_">f</span>(num-<span class="hljs-number">1</span>)<br>    &#125;<br>&#125;） <span class="hljs-comment">//这样就没有问题了，实际上起作用的是闭包函数f，而不是外面的函数newFactorial</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="6-闭包中的坑"><a href="#6-闭包中的坑" class="headerlink" title="6 闭包中的坑"></a>6 闭包中的坑</h2><p>1.this指向问题</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> object = &#123;<br>     <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;&#x27;</span>object<span class="hljs-string">&quot;，</span><br><span class="hljs-string">     getName： function() &#123;</span><br><span class="hljs-string">        return function() &#123;</span><br><span class="hljs-string">             console.info(this.name)</span><br><span class="hljs-string">        &#125;</span><br><span class="hljs-string">    &#125;</span><br><span class="hljs-string">&#125;</span><br><span class="hljs-string">object.getName()()    // underfined</span><br><span class="hljs-string">// 因为里面的闭包函数是在window作用域下执行的，也就是说，this指向windows</span><br><span class="hljs-string">//实际等同于</span><br><span class="hljs-string">var fn = object.getName() //此时object调用getname方法，this指向object</span><br><span class="hljs-string">fn();  //此时window调用fn（）方法，所以this指向window</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>2.内存泄漏问题：</p>
+<p>​		<strong>内存泄漏一般是指变量的内存没有及时的回收，导致内存资源浪费。</strong>一般有三种情况出现内存泄露比较多。（1）常见的声明了一个全局变量，但是又没有用上，那么就有点浪费内存了，（2）定时器没清除 （3）循环引用：A 对象里面有一个属性指向 B 对象，B 对象有一个属性指向 A 对象。互相引用<br>​		解决内存泄露：我们编译器有一个自动的内存清理。常见的主要是引用记数 和 标记清除。 谷歌浏览器主要是用标记清除，大概流程是给每一个变量添加一个标记，通过内部算法计算引用情况，当不使用的时候就会自动清除。如果遇到定时器的话，我一般会在页面关闭的时候手动清除。如果遇到循环引用，我一般会手动把变量赋值为 null 来清除.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span>  <span class="hljs-title function_">showId</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">var</span> el = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;app&quot;</span>)<br>    el.<span class="hljs-property">onclick</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>      <span class="hljs-title function_">aler</span>(el.<span class="hljs-property">id</span>)   <span class="hljs-comment">// 这样会导致闭包引用外层的el，当执行完showId后，el无法释放</span><br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 改成下面</span><br><span class="hljs-keyword">function</span>  <span class="hljs-title function_">showId</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">var</span> el = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;app&quot;</span>)<br>    <span class="hljs-keyword">var</span> id  = el.<span class="hljs-property">id</span><br>    el.<span class="hljs-property">onclick</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>      <span class="hljs-title function_">aler</span>(id)   <span class="hljs-comment">// 这样会导致闭包引用外层的el，当执行完showId后，el无法释放</span><br>    &#125;<br>    el = <span class="hljs-literal">null</span>    <span class="hljs-comment">// 主动释放el</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="../../../../categories/javascript/" class="category-chain-item">javascript</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>闭包及其案例</div>
+      <div>http://example.com/2023/05/24/闭包及其案例/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>杨帆</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>May 24, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="../%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B-%E6%B5%85%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B7%B1%E6%8B%B7%E8%B4%9D/" title="基本类型与引用类型&amp;浅拷贝与深拷贝">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">基本类型与引用类型&amp;浅拷贝与深拷贝</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="../../22/javascript%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0/" title="javascript高阶函数">
+                        <span class="hidden-mobile">javascript高阶函数</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      
+
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Views: 
+        <span id="busuanzi_value_site_pv"></span>
+        
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Visitors: 
+        <span id="busuanzi_value_site_uv"></span>
+        
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      京ICP证123456号
+    </a>
+  </span>
+  
+    
+      <span>
+        <a
+          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=12345678"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="../../../../img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+          
+          <span>京公网安备12345678号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="../../../../js/events.js" ></script>
+<script  src="../../../../js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="../../../../js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="../../../../js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="../../../../js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,762 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="../../../../img/fluid.png">
+  <link rel="icon" href="../../../../img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="杨帆">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="react生命周期">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react生命周期">
+<meta property="og:url" content="http://example.com/2023/06/10/react%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/index.html">
+<meta property="og:site_name" content="yangfan&#39;s blog">
+<meta property="og:description" content="react生命周期">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/06/10/react%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/image-20230610143325141.png">
+<meta property="og:image" content="http://example.com/2023/06/10/react%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/image-20230610144658423.png">
+<meta property="og:image" content="http://example.com/2023/06/10/react%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/image-20230610174632977.png">
+<meta property="og:image" content="http://example.com/2023/06/10/react%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/image-20230610175410224.png">
+<meta property="og:image" content="http://example.com/2023/06/10/react%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/image-20230610175541280.png">
+<meta property="article:published_time" content="2023-06-10T05:57:10.000Z">
+<meta property="article:modified_time" content="2023-06-11T12:01:50.910Z">
+<meta property="article:author" content="杨帆">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/06/10/react%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/image-20230610143325141.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>react生命周期 - yangfan&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="../../../../css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="../../../../css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="../../../../css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="../../../../js/utils.js" ></script>
+  <script  src="../../../../js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 40vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="../../../../index.html">
+      <strong>Yangfan&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../index.html">
+                <i class="iconfont icon-home-fill"></i>
+                <span>主页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>链接</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('../../../../img/bg2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="react生命周期"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-06-10 13:57" pubdate>
+          June 10, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.6k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          38 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">react生命周期</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="react生命周期"><a href="#react生命周期" class="headerlink" title="react生命周期"></a>react生命周期</h1><h2 id="一、初始化阶段"><a href="#一、初始化阶段" class="headerlink" title="一、初始化阶段"></a>一、初始化阶段</h2><ul>
+<li><strong>componentWillMount</strong></li>
+<li><strong>render</strong></li>
+<li><strong>componentDidMount</strong></li>
+</ul>
+<p><code>componentWillMount</code>:第一次上树前的最后一次修改状态的机会。 （不安全）</p>
+<p>应用：初始化数据。</p>
+<p><code>render</code>：渲染页面，dom树，<font color='yellow'>不允许render中改变state状态值</font>，会陷入死循环。</p>
+<p><code>componentDidMount</code>：页面dom节点渲染完毕。</p>
+<p>应用：1.数据请求 axios；</p>
+<p>​			2.订阅函数调用，订阅方法见“react组件通信方法”一文；</p>
+<p>​			3.定时器 setInterval；</p>
+<p>​			4.基础创建完的dom进行初始化，。。如BetterScroll。</p>
+<h2 id="二、运行中阶段"><a href="#二、运行中阶段" class="headerlink" title="二、运行中阶段"></a>二、运行中阶段</h2><ul>
+<li><strong>componentWillReceivePeops</strong> : 父组件修改属性触发，可以<font color='yellow'>最先获得父组件传来的属性</font>，可以利用属性进行ajax或者逻辑处理。</li>
+<li><strong>shouldComponentUpdata(nextProps,nextState):</strong> 该函数里面this.state是旧的函数值，返回false会阻止更新；（***<font color="red">性能优化函数</font>***）</li>
+<li><strong>componetWillUpdata：</strong>（不安全）只能拿到旧的状态值，<font color='yellow'>不能更新状态</font>，因为只要setstate，就又要执行componetWillUpdata &#x3D;&gt; render &#x3D;&gt; componentDidUpdata这个过程，又将陷入死循环。</li>
+<li><strong>render</strong>： 只能访问this.props和this.state，<font color='yellow'>不允许修改状态和dom输出</font>,会死循环；</li>
+<li>**componentDidUpdata(prevProps,prevState)**： 该函数里面this.state是新的状态值，可以修改dom，可以传参数获取旧状态值。</li>
+</ul>
+<p>应用：</p>
+<p>1：componentDidUpdata会多次执行，为了避免多次执行，可以给该方法传递参数，通过判断参数中旧状态的值来决定是否执行某段代码。例如：</p>
+<p><img src="image-20230610143325141.png" srcset="/img/loading.gif" lazyload alt="image-20230610143325141"></p>
+<p>2.shouldComponentUpdata(nextProps,nextState)用于判断是否更新，当状态值没变的时候控制不更新，可以优化速度。</p>
+<p><img src="image-20230610144658423.png" srcset="/img/loading.gif" lazyload alt="image-20230610144658423"></p>
+<h2 id="三、销毁阶段"><a href="#三、销毁阶段" class="headerlink" title="三、销毁阶段"></a>三、销毁阶段</h2><ul>
+<li><strong>componentWillUnmount</strong>: 在删除组件之前进行清理操作，如计时器和事件监听器。</li>
+</ul>
+<h2 id="四、新生命周期"><a href="#四、新生命周期" class="headerlink" title="四、新生命周期"></a>四、新生命周期</h2><p><strong>老生命周期的问题：</strong></p>
+<p>(1) componentWillMount ,在ssr中 这个方法将会被多次调用， 所以会重复触发多遍，同时在这里如果绑定事件，将无法解绑，导致内存泄漏 ， 变得不够安全高效逐步废弃。</p>
+<p>(2) componentWillReceiveProps 外部组件多次频繁更新传入多次不同的 props，会导致不必要的异步请求</p>
+<p>(3) componetWillupdate, 更新前记录 DOM 状态, 可能会做一些处理，与componentDidUpdate相隔时间如果过长， 会导致状态不可信。</p>
+<p><strong>新生命周期的替代</strong></p>
+<p>（1）<strong>getDerivedStateFromProps（nextProps,nextState）</strong> <strong>第一次的初始化组件以及后续的更新过程中(包括自身状态更新以及父传子)都会触发</strong> ，返回一个对象作为新的state，返回null则说明不需要在这里更新state；</p>
+<p>getDerivedStateFromProps可以代替componentWillMount 和componentWillReceiveProps 。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-comment">//老的生命周期的写法 </span><br><span class="hljs-title function_">componentDidMount</span>(<span class="hljs-params"></span>) &#123; <br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">props</span>.<span class="hljs-property">value</span>!==<span class="hljs-literal">undefined</span>)&#123; <br>        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setState</span>(&#123; <span class="hljs-attr">current</span>:<span class="hljs-variable language_">this</span>.<span class="hljs-property">props</span>.<span class="hljs-property">value</span> &#125;) <br>    &#125; <br>&#125;<br><span class="hljs-title function_">componentWillReceiveProps</span>(<span class="hljs-params">nextProps</span>)&#123; <br>    <span class="hljs-keyword">if</span>(nextProps.<span class="hljs-property">value</span> !==<span class="hljs-literal">undefined</span>)&#123;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setState</span>(&#123; <span class="hljs-attr">current</span>:nextProps.<span class="hljs-property">value</span> &#125;) <br>    &#125; <br>&#125;<br><span class="hljs-comment">// 新的生命周期写法 </span><br><span class="hljs-keyword">static</span> <span class="hljs-title function_">getDerivedStateFromProps</span>(<span class="hljs-params">nextProps</span>) &#123; <br>    <span class="hljs-keyword">if</span>(nextProps.<span class="hljs-property">value</span>!==<span class="hljs-literal">undefined</span>)&#123; <br>        <span class="hljs-keyword">return</span> &#123; <br>            <span class="hljs-attr">current</span>:nextProps.<span class="hljs-property">value</span> <br>        &#125; <br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span> <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p> (2) <strong>getSnapshotBeforeUpdate</strong> 取代了 componetWillUpdate ,触发时间为update发生的时候，在<strong>render之后dom渲染之前</strong>返回一个值，该函数return返回的值作为componentDidUpdate的第三个参数。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-comment">//新的数据不断插入数据前面， 导致我正在看的数据向下走，如何保持可视区依旧是我之前看的数据呢？ </span><br><span class="hljs-title function_">getSnapshotBeforeUpdate</span>(<span class="hljs-params"></span>)&#123; <br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">refs</span>.<span class="hljs-property">wrapper</span>.<span class="hljs-property">scrollHeight</span> <br>&#125;<br><span class="hljs-title function_">componentDidUpdate</span>(<span class="hljs-params">prevProps, prevState,preHeight</span>) &#123;<br>    <span class="hljs-comment">//if(preHeight===200)return ; </span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">refs</span>.<span class="hljs-property">wrapper</span>.<span class="hljs-property">scrollTop</span> +=<span class="hljs-variable language_">this</span>.<span class="hljs-property">refs</span>.<span class="hljs-property">wrapper</span>.<span class="hljs-property">scrollHeight</span>-preHeight <br>&#125;<br>&lt;div style=&#123;&#123;<span class="hljs-attr">height</span>:<span class="hljs-string">&quot;200px&quot;</span>,<span class="hljs-attr">overflow</span>:<span class="hljs-string">&quot;auto&quot;</span>&#125;&#125;&#125; <br>    ref=<span class="hljs-string">&quot;wrapper&quot;</span>&gt; <br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>......... <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span> <br>&lt;/div&gt;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="附：性能优化函数案例shouldComponentUpdate"><a href="#附：性能优化函数案例shouldComponentUpdate" class="headerlink" title="附：性能优化函数案例shouldComponentUpdate"></a>附：性能优化函数案例shouldComponentUpdate</h3><p>效果：输入框输入值，对应下标值的框改变颜色</p>
+<p><img src="image-20230610174632977.png" srcset="/img/loading.gif" lazyload alt="image-20230610174632977"></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-comment">//父组件</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, &#123; <span class="hljs-title class_">Component</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">Box</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./Box&quot;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;./22.css&quot;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span> &#123;<br>  state = &#123;<br>    <span class="hljs-attr">list</span>: [<span class="hljs-string">&quot;11&quot;</span>, <span class="hljs-string">&quot;22&quot;</span>, <span class="hljs-string">&quot;33&quot;</span>, <span class="hljs-string">&quot;44&quot;</span>, <span class="hljs-string">&quot;55&quot;</span>, <span class="hljs-string">&quot;66&quot;</span>, <span class="hljs-string">&quot;77&quot;</span>, <span class="hljs-string">&quot;88&quot;</span>, <span class="hljs-string">&quot;99&quot;</span>, <span class="hljs-string">&quot;00&quot;</span>],<br>    <span class="hljs-attr">current</span>: <span class="hljs-number">2</span>,<br>  &#125;;<br>  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> (<br>      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">input</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;number&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">style</span>=<span class="hljs-string">&#123;&#123;</span> <span class="hljs-attr">overflow:</span> &quot;<span class="hljs-attr">hidden</span>&quot; &#125;&#125;</span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">onChange</span>=<span class="hljs-string">&#123;(evt)</span> =&gt;</span> &#123;</span><br><span class="language-xml">            this.setState(&#123;</span><br><span class="language-xml">              current: Number(evt.target.value),</span><br><span class="language-xml">            &#125;);</span><br><span class="language-xml">          &#125;&#125;</span><br><span class="language-xml">        &gt;<span class="hljs-tag">&lt;/<span class="hljs-name">input</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">          &#123;this.state.list.map((item, index) =&gt; (</span><br><span class="language-xml">&#123;//通过判断当前下标与输入值是否相等决定是否添加样式&#125;</span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">Box</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&#123;index&#125;</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&#123;item&#125;</span> <span class="hljs-attr">current</span>=<span class="hljs-string">&#123;this.state.current&#125;</span>&gt;</span></span><br><span class="language-xml">              &#123;item&#125;</span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">Box</span>&gt;</span></span><br><span class="language-xml">          ))&#125;</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        &#123;console.log(this.props)&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>    );<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-comment">//子组件</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, &#123; <span class="hljs-title class_">Component</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;./22.css&quot;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Box</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span> &#123;<br>  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;render&quot;</span>);<br>    <span class="hljs-keyword">return</span> (<br>      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;box&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">style</span>=<span class="hljs-string">&#123;&#123;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">border:</span></span></span><br><span class="hljs-tag"><span class="language-xml">            <span class="hljs-attr">this.props.current</span> === <span class="hljs-string">this.props.index</span></span></span><br><span class="hljs-tag"><span class="language-xml">              ? &quot;<span class="hljs-attr">1px</span> <span class="hljs-attr">solid</span> <span class="hljs-attr">red</span>&quot;</span></span><br><span class="hljs-tag"><span class="language-xml">              <span class="hljs-attr">:</span> &quot;<span class="hljs-attr">1px</span> <span class="hljs-attr">solid</span> <span class="hljs-attr">gray</span>&quot;,</span></span><br><span class="hljs-tag"><span class="language-xml">        &#125;&#125;</span></span><br><span class="hljs-tag"><span class="language-xml">      &gt;</span></span><br><span class="language-xml">        &#123;this.props.children&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>    );<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>注意：此时效果可以实现，但是每次更改输入框的值，十个框都会重新渲染一遍，浪费内存。如下图所示：</p>
+<p><img src="image-20230610175410224.png" srcset="/img/loading.gif" lazyload alt="image-20230610175410224"></p>
+<p>期待效果：每次输入框的值改变以后，只移除原来那个框的红色样式和给新框添加上红色边框样式，而其余的不重新渲染。</p>
+<p>实现方法：在子组件中通过<code>shouldComponentUpdate</code>控制当前组件是否渲染。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Box</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span> &#123;<br>  <span class="hljs-title function_">shouldComponentUpdate</span>(<span class="hljs-params">nextProps</span>) &#123;<br>    <span class="hljs-keyword">if</span> (<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">props</span>.<span class="hljs-property">current</span> === <span class="hljs-variable language_">this</span>.<span class="hljs-property">props</span>.<span class="hljs-property">index</span> ||<br>      nextProps.<span class="hljs-property">index</span> === nextProps.<span class="hljs-property">current</span><br>    ) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>  &#125;<br></code></pre></td></tr></table></figure>
+
+<p>效果：只会在第一次渲染到页面的时候会执行十次render函数，后面更改输入框的值的时候，只会执行旧框和新选择框的render函数。</p>
+<p><img src="image-20230610175541280.png" srcset="/img/loading.gif" lazyload alt="image-20230610175541280"></p>
+<h3 id="性能优化-方案二-PureComponent"><a href="#性能优化-方案二-PureComponent" class="headerlink" title="性能优化 方案二 PureComponent"></a>性能优化 方案二 PureComponent</h3><p>PureComponent是react官方提供的，会自动比较新旧props、state（值相等,或者对象含有相同的属性、且属性值相等 ），决定shouldcomponentUpdate 返回true 或者false， 从而决定要不要呼叫 render function。</p>
+<p>使用方法：引用的时候<code>import React &#123;PureComponet&#125; from react</code>即可。</p>
+<p>注意：如果你的 state 或 props 『永远都会变』，那 PureComponent 不适合，因为 shallowEqual 也需要花时间。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="../../../../categories/react/" class="category-chain-item">react</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>react生命周期</div>
+      <div>http://example.com/2023/06/10/react生命周期/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>杨帆</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>June 10, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="../../11/react-hooks%E8%AF%A6%E8%A7%A3/" title="react-内置hooks详解">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">react-内置hooks详解</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="../../09/react%E7%BB%84%E4%BB%B6%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/" title="react组件间的通信方式">
+                        <span class="hidden-mobile">react组件间的通信方式</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      
+
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Views: 
+        <span id="busuanzi_value_site_pv"></span>
+        
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Visitors: 
+        <span id="busuanzi_value_site_uv"></span>
+        
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      京ICP证123456号
+    </a>
+  </span>
+  
+    
+      <span>
+        <a
+          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=12345678"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="../../../../img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+          
+          <span>京公网安备12345678号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="../../../../js/events.js" ></script>
+<script  src="../../../../js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="../../../../js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="../../../../js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="../../../../js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
