@@ -1892,27 +1892,6 @@ input[type=checkbox] {
 .about-icons > a > i {
   font-size: 1.5rem;
 }
-.about-details > h2 {
-  margin-bottom: 20px;
-}
-.about-details > ul {
-  list-style-type: none;
-  padding: 0;
-}
-.about-details > li {
-  margin-bottom: 10px;
-}
-.about-details > .education {
-  margin-bottom: 30px;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-.about-details > .skills {
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
 .category-bar .category-list {
   max-height: 85vh;
   overflow-y: auto;
