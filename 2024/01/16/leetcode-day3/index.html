@@ -16,25 +16,25 @@
   <meta name="author" content="杨帆">
   <meta name="keywords" content="">
   
-    <meta name="description" content="day2">
+    <meta name="description" content="最长子串">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leetcode-day2">
-<meta property="og:url" content="http://example.com/2024/01/15/leetcode-day2/index.html">
+<meta property="og:title" content="leetcode-day3">
+<meta property="og:url" content="http://example.com/2024/01/16/leetcode-day3/index.html">
 <meta property="og:site_name" content="yangfan&#39;s blog">
-<meta property="og:description" content="day2">
+<meta property="og:description" content="最长子串">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2024/01/15/leetcode-day2/image-20240515162014362.png">
-<meta property="article:published_time" content="2024-01-15T08:19:01.000Z">
-<meta property="article:modified_time" content="2024-05-15T08:44:26.866Z">
+<meta property="og:image" content="http://example.com/2024/01/16/leetcode-day3/image-20240516190407671.png">
+<meta property="article:published_time" content="2024-01-16T11:02:55.000Z">
+<meta property="article:modified_time" content="2024-05-16T11:09:41.076Z">
 <meta property="article:author" content="杨帆">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2024/01/15/leetcode-day2/image-20240515162014362.png">
+<meta name="twitter:image" content="http://example.com/2024/01/16/leetcode-day3/image-20240516190407671.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>leetcode-day2 - yangfan&#39;s blog</title>
+  <title>leetcode-day3 - yangfan&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -200,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="leetcode-day2"></span>
+            <span id="subtitle" data-typed-text="leetcode-day3"></span>
           
         </div>
 
@@ -211,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-01-15 16:19" pubdate>
-          January 15, 2024 pm
+        <time datetime="2024-01-16 19:02" pubdate>
+          January 16, 2024 pm
         </time>
       </span>
     
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          874 words
+          529 words
         
       </span>
     
@@ -234,7 +234,7 @@
         
         
         
-          8 mins
+          5 mins
         
       </span>
     
@@ -272,16 +272,17 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">leetcode-day2</h1>
+            <h1 style="display: none">leetcode-day3</h1>
             
             
               <div class="markdown-body">
                 
-                <p>题目：题号2</p>
-<p><img src="image-20240515162014362.png" srcset="/img/loading.gif" lazyload alt="image-20240515162014362"></p>
-<p>分析：用链表来存储数组，链头为个位，链尾为最高位。要求和，方法:创建一个新的链表来存储和的值，对应位相加，先判断是否需要进位，再往链表中添加节点。最后当链表遍历完以后，还需判断最高位相加是否需要进位。</p>
-<p>代码：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Definition for singly-linked list.</span><br><span class="hljs-comment"> * function ListNode(val, next) &#123;</span><br><span class="hljs-comment"> *     this.val = (val===undefined ? 0 : val)</span><br><span class="hljs-comment"> *     this.next = (next===undefined ? null : next)</span><br><span class="hljs-comment"> * &#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">ListNode</span>&#125; <span class="hljs-variable">l1</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">ListNode</span>&#125; <span class="hljs-variable">l2</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">ListNode</span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> addTwoNumbers = <span class="hljs-keyword">function</span>(<span class="hljs-params">l1, l2</span>) &#123;<br>    <span class="hljs-keyword">let</span> head = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ListNode</span>()   <span class="hljs-comment">//头节点</span><br>    <span class="hljs-keyword">let</span> curr = head				<span class="hljs-comment">//当前节点</span><br>    <span class="hljs-keyword">let</span> num = <span class="hljs-number">0</span>   <span class="hljs-comment">//进位？</span><br>    <span class="hljs-keyword">while</span>(l1 !== <span class="hljs-literal">null</span> || l2!== <span class="hljs-literal">null</span>)&#123;<br>        <span class="hljs-keyword">let</span> sum = <span class="hljs-number">0</span>  <br>        <span class="hljs-keyword">if</span>(l1 !== <span class="hljs-literal">null</span>)&#123;<br>            sum += l1.<span class="hljs-property">val</span><br>            l1 = l1.<span class="hljs-property">next</span><br>        &#125;<br>        <span class="hljs-keyword">if</span>(l2 !== <span class="hljs-literal">null</span>)&#123;<br>            sum += l2.<span class="hljs-property">val</span><br>            l2 = l2.<span class="hljs-property">next</span><br>        &#125;<br>        sum += num    <br>        <span class="hljs-keyword">if</span>(sum &gt;= <span class="hljs-number">10</span>)&#123;<br>            num = <span class="hljs-number">1</span>   <span class="hljs-comment">//进位</span><br>            sum = sum - <span class="hljs-number">10</span>  <span class="hljs-comment">//余数</span><br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            num = <span class="hljs-number">0</span><br>        &#125;<br>        curr.<span class="hljs-property">next</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ListNode</span>(sum)<br>        curr = curr.<span class="hljs-property">next</span>      <span class="hljs-comment">//当前节点逐渐移动</span><br>    &#125;<br>    <span class="hljs-keyword">if</span>(num &gt; <span class="hljs-number">0</span>)&#123;   <br>        curr.<span class="hljs-property">next</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ListNode</span>(num)  <span class="hljs-comment">//如果最高位相加大于10，也得进位</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> head.<span class="hljs-property">next</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+                <p>题目 题号：3</p>
+<p><img src="image-20240516190407671.png" srcset="/img/loading.gif" lazyload alt="image-20240516190407671"></p>
+<p>分析：<strong>1.双指针  2.滑动窗口</strong></p>
+<p>用数组来保存滑动窗口的值，如果右指针当前值在滑动窗口中存在，则依次删除<strong>滑动窗口</strong>的第一个元素，直到滑动窗口中不含右指针对应的元素。</p>
+<p>代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> lengthOfLongestSubstring = <span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br><span class="hljs-keyword">let</span> maxlength = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">let</span> left = <span class="hljs-number">0</span>,right = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">let</span> arr = []<br>    <span class="hljs-keyword">if</span>(s.<span class="hljs-property">length</span> === <span class="hljs-number">0</span>)&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br>    &#125;<br>    <span class="hljs-keyword">while</span>(right &lt; s.<span class="hljs-property">length</span>)&#123;<br>        <span class="hljs-keyword">if</span>(arr.<span class="hljs-title function_">indexOf</span>(s[right])===-<span class="hljs-number">1</span>)&#123;  <span class="hljs-comment">//没有重复的，右指针移动</span><br>            arr.<span class="hljs-title function_">push</span>(s[right])<br>            right++<br>        &#125;<br>        <span class="hljs-keyword">else</span>&#123;   <span class="hljs-comment">//如果有重复的，从前面删除，一直删除到没有与该元素重复的为止</span><br>            <span class="hljs-keyword">while</span>(arr.<span class="hljs-title function_">indexOf</span>(s[right]) &gt; -<span class="hljs-number">1</span>)&#123;<br>                arr.<span class="hljs-title function_">shift</span>()<br>                left++<br>            &#125;<br>        &#125;<br>        maxlength = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(right-left,maxlength)<br>    &#125;<br>    <span class="hljs-keyword">return</span> maxlength<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 
                 
@@ -321,8 +322,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>leetcode-day2</div>
-      <div>http://example.com/2024/01/15/leetcode-day2/</div>
+      <div>leetcode-day3</div>
+      <div>http://example.com/2024/01/16/leetcode-day3/</div>
     </div>
     <div class="license-meta">
       
@@ -334,7 +335,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>January 15, 2024</div>
+          <div>January 16, 2024</div>
         </div>
       
       
@@ -366,9 +367,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="../../16/leetcode-day3/" title="leetcode-day3">
+                      <a href="../../../03/05/vue%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" title="vue反向代理">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">leetcode-day3</span>
+                        <span class="hidden-mobile">vue反向代理</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -376,8 +377,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="../../14/leetcode-day1/" title="leetcode-day1">
-                        <span class="hidden-mobile">leetcode-day1</span>
+                      <a href="../../15/leetcode-day2/" title="leetcode-day2">
+                        <span class="hidden-mobile">leetcode-day2</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
