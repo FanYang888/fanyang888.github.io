@@ -239,6 +239,25 @@
   
   
   <entry>
+    <title>leetcode-day5</title>
+    <link href="/2024/01/19/leetcode-day5/"/>
+    <url>/2024/01/19/leetcode-day5/</url>
+    
+    <content type="html"><![CDATA[<p>题目 题号15</p><p><img src="image-20240519164211762.png" alt="image-20240519164211762"></p><p>分析</p><p><strong>重要点1：三数和为0   重要点2：不重复</strong></p><p>1.首先需要将原数组按从小到大排序。</p><p>2.遍历排序后的数组，从0遍历到<strong>length-2</strong>，只遍历到length-2的原因：三数之和，第一个数最多到length-2的位置。</p><p>3.start和end的初始值分别取i+1和length-1,当start&lt;end的时候循环判断nums[i] + nums[start] + nums[end] ?&#x3D;&#x3D;&#x3D; 0,若和大于0，则end–，若和小于0，start++。</p><p>4.由于返回值不包含重复的，需要三个值的每个值都考虑不重复；</p><p>​①第一个值不重复，在i循环遍历的时候，只有当i&#x3D;&#x3D;&#x3D;0或者**nums[i] !&#x3D;&#x3D; nums[i-1]**的时候才遍历。</p><p>​②第二个值不重复，即start的值不重复，在三数和为0的时候，需要进行<strong>start++<strong>操作，此时需要</strong>把start一直往后移动到值不相等的位置</strong>。</p><p>​③第三个值不重复，即end的值不重复，在三数和为0的时候，需要进行<strong>end–<strong>操作，此时需要</strong>把end一直往前移动到值不相等的位置</strong>。</p><p>代码：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> threeSum = <span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) &#123;<br>    <span class="hljs-keyword">let</span> resArr = []<br>    nums.<span class="hljs-title function_">sort</span>(<span class="hljs-function">(<span class="hljs-params">x,y</span>)=&gt;</span>x-y)  <span class="hljs-comment">//排序</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>;i &lt; nums.<span class="hljs-property">length</span>-<span class="hljs-number">2</span>;i++)&#123;<br>        <span class="hljs-keyword">let</span> start = i+<span class="hljs-number">1</span><br>        <span class="hljs-keyword">let</span> end = nums.<span class="hljs-property">length</span> - <span class="hljs-number">1</span><br>        <span class="hljs-keyword">if</span>(i===<span class="hljs-number">0</span> || nums[i] !== nums[i-<span class="hljs-number">1</span>])&#123;  <span class="hljs-comment">//去重第一个数字</span><br>            <span class="hljs-keyword">while</span>(start &lt; end)&#123;<br>                <span class="hljs-keyword">if</span>(nums[i] + nums[start] + nums[end] === <span class="hljs-number">0</span>)&#123;  <span class="hljs-comment">//符合题意的情况</span><br>                    resArr.<span class="hljs-title function_">push</span>([nums[i],nums[start],nums[end]])<br>                    start++ <span class="hljs-comment">//注意别忘</span><br>                    end--<br>                    <span class="hljs-keyword">while</span>(start &lt; end &amp;&amp; nums[start]===nums[start-<span class="hljs-number">1</span>])&#123;  <span class="hljs-comment">//start去重</span><br>                        start++<br>                    &#125;<br>                    <span class="hljs-keyword">while</span>(start&lt;end &amp;&amp; nums[end] === nums[end+<span class="hljs-number">1</span>])&#123;   <span class="hljs-comment">//end去重</span><br>                        end--<br>                    &#125;<br>                &#125;<br>                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(nums[i] + nums[start] + nums[end] &lt; <span class="hljs-number">0</span>)&#123;<br>                    start++<br>                &#125;<br>                <span class="hljs-keyword">else</span>&#123;<br>                    end--<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> resArr<br>&#125;;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>leetcode</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>leetcode-day4</title>
     <link href="/2024/01/18/leetcode-day4/"/>
     <url>/2024/01/18/leetcode-day4/</url>
