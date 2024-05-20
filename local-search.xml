@@ -258,6 +258,25 @@
   
   
   <entry>
+    <title>leetcode-day6</title>
+    <link href="/2024/01/20/leetcode-day6/"/>
+    <url>/2024/01/20/leetcode-day6/</url>
+    
+    <content type="html"><![CDATA[<p>题目 题号19</p><p><img src="image-20240520094453435.png" alt="image-20240520094453435"></p><p>分析：由于单向链表只能从链头找，不能从链尾找，所以使用两个指针来遍历，两个指针相差n个节点，当tail节点指向最后元素时，current节点刚好指向需要删除的前一个节点。</p><p>一般可以在head前面添加一个dummy节点，方便操作只有1个节点的情况。</p><p>代码：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> removeNthFromEnd = <span class="hljs-keyword">function</span>(<span class="hljs-params">head, n</span>) &#123;<br>    <span class="hljs-keyword">let</span> dummy = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ListNode</span>()<br>    dummy.<span class="hljs-property">next</span> = head<br>    <span class="hljs-keyword">let</span> current = dummy<br>    <span class="hljs-keyword">let</span> tail = dummy<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(head.<span class="hljs-property">next</span>)<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span> ;i &lt; n;i++)&#123;  <span class="hljs-comment">//先让两指针相差n个节点</span><br>        tail = tail.<span class="hljs-property">next</span><br>    &#125;<br>    <br>    <span class="hljs-keyword">while</span>(tail.<span class="hljs-property">next</span> !== <span class="hljs-literal">null</span>)&#123;  <span class="hljs-comment">//同步后移，一直到当tail节点指向末尾</span><br>        current = current.<span class="hljs-property">next</span><br>        tail = tail.<span class="hljs-property">next</span><br>    &#125;<br>    current.<span class="hljs-property">next</span> = current.<span class="hljs-property">next</span>.<span class="hljs-property">next</span><br>    <span class="hljs-keyword">return</span> dummy.<span class="hljs-property">next</span><br>&#125;;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>leetcode</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>vue登录鉴权的流程</title>
     <link href="/2024/01/19/vue%E7%99%BB%E5%BD%95%E9%89%B4%E6%9D%83%E7%9A%84%E6%B5%81%E7%A8%8B/"/>
     <url>/2024/01/19/vue%E7%99%BB%E5%BD%95%E9%89%B4%E6%9D%83%E7%9A%84%E6%B5%81%E7%A8%8B/</url>
