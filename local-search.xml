@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>react与vue组件间通信对比</title>
+    <link href="/2024/05/21/react%E4%B8%8Evue%E7%BB%84%E4%BB%B6%E9%97%B4%E9%80%9A%E4%BF%A1%E5%AF%B9%E6%AF%94/"/>
+    <url>/2024/05/21/react%E4%B8%8Evue%E7%BB%84%E4%BB%B6%E9%97%B4%E9%80%9A%E4%BF%A1%E5%AF%B9%E6%AF%94/</url>
+    
+    <content type="html"><![CDATA[<h2 id="react与vue组件间通信对比"><a href="#react与vue组件间通信对比" class="headerlink" title="react与vue组件间通信对比"></a>react与vue组件间通信对比</h2><table><thead><tr><th>React</th><th>Vue</th><th>说明</th></tr></thead><tbody><tr><td>props</td><td>props,emit</td><td>父子通信</td></tr><tr><td>状态提升</td><td>中间人模式</td><td>兄弟通信</td></tr><tr><td>context实现生产者消费者模式</td><td>provide&#x2F;inject</td><td></td></tr><tr><td>发布订阅模式</td><td>中央事件总线</td><td></td></tr><tr><td>Redux</td><td>Vuex</td><td></td></tr><tr><td></td><td>refs、parents…</td><td></td></tr><tr><td></td><td>v-model</td><td></td></tr></tbody></table><p>react中通信方法说明：</p><p>生产者消费者模式：</p><p>​1.创建一个全局的context对象。</p><p>​2.公共的父组件用context.provider包裹，用value来传值，value是一个对象，可以包含数据和函数。</p><p>​3.子组件用context.consumer包裹，拿取2中value中的值或执行value中的方法。</p><p>发布订阅模式：</p><p>​1.设置一个调度中心bus，设置一个数组list用于保存订阅的回调函数。</p><p>​2.当订阅的时候，往list中push函数。</p><p>​3.当发布者发布的时候，执行list中的函数。</p><br><p>react组件通信详见：</p><p><a href="https://fanyang888.github.io/2023/06/09/react%E7%BB%84%E4%BB%B6%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/">https://fanyang888.github.io/2023/06/09/react%E7%BB%84%E4%BB%B6%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</a></p><p>vue组件通信详见：</p><p><a href="https://fanyang888.github.io/2024/03/06/Vue%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC/">https://fanyang888.github.io/2024/03/06/Vue%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC/</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>常见问题</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>canvas的基本用处</title>
     <link href="/2024/05/20/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E5%A4%84/"/>
     <url>/2024/05/20/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E5%A4%84/</url>
