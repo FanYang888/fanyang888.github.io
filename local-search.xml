@@ -8,7 +8,7 @@
     <link href="/2024/05/20/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E5%A4%84/"/>
     <url>/2024/05/20/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E5%A4%84/</url>
     
-    <content type="html"><![CDATA[<p>canvas的常见用处</p><p>1.画图，后端返回一个文件，绘制出来</p><p>2.前端图片压缩: 利用toBlob或toDataURL设置第三个参数。</p><p>3.截图</p><p>4.图片添加滤镜</p><p>例子：</p><p>利用toBlob图片压缩：</p><p><img src="canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E5%A4%84/image-20240520153835823.png" alt="image-20240520153835823"></p><p>页面截图：</p><p>如果截取的是图片dom或canvas dom 或video，直接用drawImage（dom），然后toBlob &#x3D;》filesaver</p><p>如果截图的是div dom 或body，则需要用到库 html2canvas</p><p><img src="canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E5%A4%84/image-20240520154219333.png" alt="image-20240520154219333"></p><p><img src="canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E5%A4%84/image-20240520154248486.png" alt="image-20240520154248486"></p><p>如果是要选择区域截图，则较复杂。</p><p>添加滤镜：方法：利用getImageData读取一个图片文件的像素信息，然后改变每个像素点的rgba值，然后保存。</p>]]></content>
+    <content type="html"><![CDATA[<p>canvas的常见用处</p><p>1.画图，后端返回一个文件，绘制出来</p><p>2.前端图片压缩: 利用toBlob或toDataURL设置第三个参数。</p><p>3.截图</p><p>4.图片添加滤镜</p><p>例子：</p><p>利用toBlob图片压缩：</p><p><img src="image-20240520153835823.png" alt="image-20240520153835823"></p><p>页面截图：</p><p>如果截取的是图片dom或canvas dom 或video，直接用drawImage（dom），然后toBlob &#x3D;》filesaver</p><p>如果截图的是div dom 或body，则需要用到库 html2canvas</p><p><img src="image-20240520154219333.png" alt="image-20240520154219333"></p><p><img src="image-20240520154248486.png" alt="image-20240520154248486"></p><p>如果是要选择区域截图，则较复杂。</p><p>添加滤镜：方法：利用getImageData读取一个图片文件的像素信息，然后改变每个像素点的rgba值，然后保存。</p>]]></content>
     
     
     <categories>
