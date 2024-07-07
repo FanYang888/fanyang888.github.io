@@ -16,23 +16,25 @@
   <meta name="author" content="杨帆">
   <meta name="keywords" content="">
   
-    <meta name="description" content="react与vue组件间通信对比">
+    <meta name="description" content="跳跃游戏 动态规划 贪心">
 <meta property="og:type" content="article">
-<meta property="og:title" content="react与vue组件间通信对比">
-<meta property="og:url" content="http://example.com/2024/05/21/react%E4%B8%8Evue%E7%BB%84%E4%BB%B6%E9%97%B4%E9%80%9A%E4%BF%A1%E5%AF%B9%E6%AF%94/index.html">
+<meta property="og:title" content="leetcode-day7">
+<meta property="og:url" content="http://example.com/2024/07/07/leetcode-day7/index.html">
 <meta property="og:site_name" content="yangfan&#39;s blog">
-<meta property="og:description" content="react与vue组件间通信对比">
+<meta property="og:description" content="跳跃游戏 动态规划 贪心">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-05-21T11:07:53.000Z">
-<meta property="article:modified_time" content="2024-05-21T11:20:37.959Z">
+<meta property="og:image" content="http://example.com/2024/07/07/leetcode-day7/image-20240707170928227.png">
+<meta property="article:published_time" content="2024-07-07T09:07:33.000Z">
+<meta property="article:modified_time" content="2024-07-07T09:16:07.179Z">
 <meta property="article:author" content="杨帆">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2024/07/07/leetcode-day7/image-20240707170928227.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>react与vue组件间通信对比 - yangfan&#39;s blog</title>
+  <title>leetcode-day7 - yangfan&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="react与vue组件间通信对比"></span>
+            <span id="subtitle" data-typed-text="leetcode-day7"></span>
           
         </div>
 
@@ -209,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-05-21 19:07" pubdate>
-          May 21, 2024 pm
+        <time datetime="2024-07-07 17:07" pubdate>
+          July 7, 2024 pm
         </time>
       </span>
     
@@ -221,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          599 words
+          1.4k words
         
       </span>
     
@@ -232,7 +234,7 @@
         
         
         
-          5 mins
+          12 mins
         
       </span>
     
@@ -270,70 +272,22 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">react与vue组件间通信对比</h1>
+            <h1 style="display: none">leetcode-day7</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="react与vue组件间通信对比"><a href="#react与vue组件间通信对比" class="headerlink" title="react与vue组件间通信对比"></a>react与vue组件间通信对比</h2><table>
-<thead>
-<tr>
-<th>React</th>
-<th>Vue</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>props</td>
-<td>props,emit</td>
-<td>父子通信</td>
-</tr>
-<tr>
-<td>状态提升</td>
-<td>中间人模式</td>
-<td>兄弟通信</td>
-</tr>
-<tr>
-<td>context实现生产者消费者模式</td>
-<td>provide&#x2F;inject</td>
-<td></td>
-</tr>
-<tr>
-<td>发布订阅模式</td>
-<td>中央事件总线</td>
-<td></td>
-</tr>
-<tr>
-<td>Redux</td>
-<td>Vuex</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>refs、parents…</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>v-model</td>
-<td></td>
-</tr>
-</tbody></table>
-<p>react中通信方法说明：</p>
-<p>生产者消费者模式：</p>
-<p>​	1.创建一个全局的context对象。</p>
-<p>​	2.公共的父组件用context.provider包裹，用value来传值，value是一个对象，可以包含数据和函数。</p>
-<p>​	3.子组件用context.consumer包裹，拿取2中value中的值或执行value中的方法。</p>
-<p>发布订阅模式：</p>
-<p>​	1.设置一个调度中心bus，设置一个数组list用于保存订阅的回调函数。</p>
-<p>​	2.当订阅的时候，往list中push函数。</p>
-<p>​	3.当发布者发布的时候，执行list中的函数。</p>
-<br>
+                <p>题目：</p>
+<p><img src="image-20240707170928227.png" srcset="/img/loading.gif" lazyload alt="image-20240707170928227"></p>
+<p>方法一：动态规划：topToDown</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> canJump = <span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>)&#123;<br>    <span class="hljs-keyword">const</span> totalLength = nums.<span class="hljs-property">length</span><br>    <span class="hljs-keyword">const</span> memo = <span class="hljs-title class_">Array</span>(totalLength).<span class="hljs-title function_">fill</span>(<span class="hljs-number">0</span>)  <span class="hljs-comment">//创建一个记忆数组，用于标记如果到该位置能否到达最后一个下标  0未知 1可以 -1不行</span><br>    memo[totalLength-<span class="hljs-number">1</span>] = <span class="hljs-number">1</span> <span class="hljs-comment">//最后一个位置肯定能到最后一个位置</span><br><br>    <span class="hljs-keyword">function</span> <span class="hljs-title function_">jump</span>(<span class="hljs-params">position</span>)&#123;<br>        <span class="hljs-keyword">if</span>(memo[position] === <span class="hljs-number">1</span>)&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>        &#125;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(memo[position] === -<span class="hljs-number">1</span>)&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>        &#125;<br><br>        <span class="hljs-comment">//递归查找</span><br>        <span class="hljs-keyword">const</span> maxJump = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(position+nums[position] , totalLength -<span class="hljs-number">1</span>)   <span class="hljs-comment">//maxjump最多跳到哪里</span><br>        <span class="hljs-comment">//只要从这个点开始，到最多可以跳转的点之间的任何一个点是可以通到终点，则就标记这个点可以通到终点。</span><br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = position+<span class="hljs-number">1</span> ; i&lt;=maxJump ; i++)&#123;   <br>            <span class="hljs-keyword">const</span> jumpResult = <span class="hljs-title function_">jump</span>(i)<br>            <span class="hljs-keyword">if</span>(jumpResult ===<span class="hljs-literal">true</span>)&#123; <br>                memo[position] = <span class="hljs-number">1</span><br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>            &#125;<br>        &#125;<br><br>        memo[position] = -<span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>    &#125;<br><br>    <span class="hljs-keyword">let</span> result = <span class="hljs-title function_">jump</span>(<span class="hljs-number">0</span>)  <span class="hljs-comment">//从0开始，递归查找能跳到的位置</span><br>    <span class="hljs-keyword">return</span> result<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<p>react组件通信详见：</p>
-<p><a target="_blank" rel="noopener" href="https://fanyang888.github.io/2023/06/09/react%E7%BB%84%E4%BB%B6%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/">https://fanyang888.github.io/2023/06/09/react%E7%BB%84%E4%BB%B6%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</a></p>
-<p>vue组件通信详见：</p>
-<p><a target="_blank" rel="noopener" href="https://fanyang888.github.io/2024/03/06/Vue%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC/">https://fanyang888.github.io/2024/03/06/Vue%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC/</a></p>
+<p>方法二：动态规划：bottomToUp</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//方法二  动态规划  bottomToUp   从后往前，判断当前节点能跳到的区间内是否有已经确定的能到终点的</span><br><span class="hljs-keyword">var</span> canJump = <span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>)&#123;<br>    <span class="hljs-keyword">const</span> totalLength = nums.<span class="hljs-property">length</span><br>    <span class="hljs-keyword">const</span> memo = <span class="hljs-title class_">Array</span>(totalLength-<span class="hljs-number">1</span>).<span class="hljs-title function_">fill</span>(<span class="hljs-number">0</span>)<br>    memo[totalLength-<span class="hljs-number">1</span>] = <span class="hljs-number">1</span><br><br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = totalLength-<span class="hljs-number">2</span> ;i &gt;= <span class="hljs-number">0</span>;i--)&#123;<br>        <span class="hljs-keyword">const</span> maxjump = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(i+nums[i],totalLength-<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j = i;j&lt;=maxjump;j++)&#123;<br>            <span class="hljs-keyword">if</span>(memo[j] === <span class="hljs-number">1</span>)&#123;<br>                memo[i] = <span class="hljs-number">1</span><br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">if</span>(memo[<span class="hljs-number">0</span>] === <span class="hljs-number">1</span>)&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>方法三：贪心：从后往前</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> canJump = <span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>)&#123;<br>    <span class="hljs-keyword">let</span> okPosition = nums.<span class="hljs-property">length</span>-<span class="hljs-number">1</span><br><br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = nums.<span class="hljs-property">length</span>-<span class="hljs-number">2</span> ; i&gt;=<span class="hljs-number">0</span> ; i--)&#123;<br>        <span class="hljs-keyword">if</span>(i+nums[i] &gt;= okPosition)&#123;<br>            okPosition = i<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> okPosition=== <span class="hljs-number">0</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
@@ -352,7 +306,7 @@
     
       <span class="category-chain">
         
-  <a href="../../../../categories/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" class="category-chain-item">常见问题</a>
+  <a href="../../../../categories/leetcode/" class="category-chain-item">leetcode</a>
   
   
 
@@ -372,8 +326,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>react与vue组件间通信对比</div>
-      <div>http://example.com/2024/05/21/react与vue组件间通信对比/</div>
+      <div>leetcode-day7</div>
+      <div>http://example.com/2024/07/07/leetcode-day7/</div>
     </div>
     <div class="license-meta">
       
@@ -385,7 +339,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>May 21, 2024</div>
+          <div>July 7, 2024</div>
         </div>
       
       
@@ -417,18 +371,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="../../../07/07/leetcode-day7/" title="leetcode-day7">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">leetcode-day7</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="../../20/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E5%A4%84/" title="canvas的基本用处">
-                        <span class="hidden-mobile">canvas的基本用处</span>
+                      <a href="../../../05/21/react%E4%B8%8Evue%E7%BB%84%E4%BB%B6%E9%97%B4%E9%80%9A%E4%BF%A1%E5%AF%B9%E6%AF%94/" title="react与vue组件间通信对比">
+                        <span class="hidden-mobile">react与vue组件间通信对比</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
