@@ -16,26 +16,25 @@
   <meta name="author" content="杨帆">
   <meta name="keywords" content="">
   
-    <meta name="description" content="买卖股票的最佳时机">
+    <meta name="description" content="链表相交">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leetcode-day11">
-<meta property="og:url" content="http://example.com/2024/07/22/leetcode-day11/index.html">
+<meta property="og:title" content="leetcode-day14">
+<meta property="og:url" content="http://example.com/2024/07/24/leetcode-day14/index.html">
 <meta property="og:site_name" content="yangfan&#39;s blog">
-<meta property="og:description" content="买卖股票的最佳时机">
+<meta property="og:description" content="链表相交">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2024/07/22/leetcode-day11/image-20240724143924955.png">
-<meta property="og:image" content="http://example.com/2024/07/22/leetcode-day11/image-20240722224029754.png">
-<meta property="article:published_time" content="2024-07-22T14:31:11.000Z">
-<meta property="article:modified_time" content="2024-07-24T06:40:05.777Z">
+<meta property="og:image" content="http://example.com/2024/07/24/leetcode-day14/image-20240724153748747.png">
+<meta property="article:published_time" content="2024-07-24T07:36:29.000Z">
+<meta property="article:modified_time" content="2024-07-24T07:40:49.769Z">
 <meta property="article:author" content="杨帆">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2024/07/22/leetcode-day11/image-20240724143924955.png">
+<meta name="twitter:image" content="http://example.com/2024/07/24/leetcode-day14/image-20240724153748747.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>leetcode-day11 - yangfan&#39;s blog</title>
+  <title>leetcode-day14 - yangfan&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="leetcode-day11"></span>
+            <span id="subtitle" data-typed-text="leetcode-day14"></span>
           
         </div>
 
@@ -212,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-07-22 22:31" pubdate>
-          July 22, 2024 pm
+        <time datetime="2024-07-24 15:36" pubdate>
+          July 24, 2024 pm
         </time>
       </span>
     
@@ -224,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          950 words
+          557 words
         
       </span>
     
@@ -235,7 +234,7 @@
         
         
         
-          8 mins
+          5 mins
         
       </span>
     
@@ -273,24 +272,15 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">leetcode-day11</h1>
+            <h1 style="display: none">leetcode-day14</h1>
             
             
               <div class="markdown-body">
                 
-                <p>1.只能买卖一次</p>
-<p>题目：<img src="image-20240724143924955.png" srcset="/img/loading.gif" lazyload alt="image-20240724143924955"></p>
-<p>分析：只能买卖一次。而且之前先买入、再卖出</p>
+                <p>题目：</p>
+<p><img src="image-20240724153748747.png" srcset="/img/loading.gif" lazyload alt="image-20240724153748747"></p>
 <p>代码：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//这个题只能买卖一次股票，所以要计算在每个点卖出的时候的利润的最大值，然后取所有点卖出利润中的最大值。</span><br><br><span class="hljs-keyword">var</span> maxProfit = <span class="hljs-keyword">function</span>(<span class="hljs-params">prices</span>) &#123;<br>    <span class="hljs-keyword">let</span> minprice = prices[<span class="hljs-number">0</span>]<br>    <span class="hljs-keyword">let</span> maxprofit = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i= <span class="hljs-number">1</span>; i&lt;prices.<span class="hljs-property">length</span> ;i++)&#123;<br>        <span class="hljs-keyword">let</span> currentProfit = prices[i]-minprice<br>        maxprofit = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(currentProfit,maxprofit)  <br>        minprice = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(minprice,prices[i])  <span class="hljs-comment">//找到每个点之前的最小的点</span><br>    &#125;<br><br>    <span class="hljs-keyword">return</span> maxprofit<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<br>
-
-<p>2.可以买卖无数次：</p>
-<p><img src="image-20240722224029754.png" srcset="/img/loading.gif" lazyload alt="image-20240722224029754"></p>
-<p>分析：可以买卖无数次，则每次在最低点买入，最高点卖出。</p>
-<p>代码：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">/**</span><br><span class="hljs-comment">这个题与121的区别是：</span><br><span class="hljs-comment">这个题可以多次买入卖出，则需要计算多次利润的和，而121只能买卖一次</span><br><span class="hljs-comment"></span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> maxProfit = <span class="hljs-keyword">function</span>(<span class="hljs-params">prices</span>) &#123;<br>    <span class="hljs-keyword">if</span>(prices.<span class="hljs-property">length</span> === <span class="hljs-number">0</span>)&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br>    &#125;<br><br>    <span class="hljs-keyword">let</span> profit = <span class="hljs-number">0</span>, min=prices[<span class="hljs-number">0</span>] , max = prices[<span class="hljs-number">0</span>]<br><br><span class="hljs-comment">//注意这个思路！！！多个while嵌套</span><br>    <span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span> <br>    <span class="hljs-keyword">while</span>(i&lt;prices.<span class="hljs-property">length</span> -<span class="hljs-number">1</span> )&#123;<br>        <span class="hljs-keyword">while</span>(i&lt;prices.<span class="hljs-property">length</span>-<span class="hljs-number">1</span> &amp;&amp; prices[i]&gt;=prices[i+<span class="hljs-number">1</span>])&#123;  <span class="hljs-comment">//股票当前为下跌趋势   </span><br>            i++<br>        &#125;<br>        min = prices[i]   <span class="hljs-comment">//找小值   必须先找小值，再找大值！！！</span><br><br>        <span class="hljs-keyword">while</span>(i&lt;prices.<span class="hljs-property">length</span>-<span class="hljs-number">1</span> &amp;&amp; prices[i]&lt;=prices[i+<span class="hljs-number">1</span>])&#123;  <span class="hljs-comment">//股票当前为上涨趋势</span><br>            i++<br>        &#125;<br>        max = prices[i]   <span class="hljs-comment">//找大值</span><br><br>        profit += max-min<br>    &#125;<br>    <span class="hljs-keyword">return</span> profit<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs js"> <span class="hljs-comment">//学习思路：因为AB的长度不一定相等，</span><br> <span class="hljs-comment">//巧妙的解决办法：当A链表的指针移动到末尾的时候，让其又从B链表头部开始，当B链表的指针移动到末尾的时候，让其又从A链表头部开始,这样走的距离就是相同的了。</span><br><br> <span class="hljs-comment">//该算法的两个巧妙点：</span><br> <span class="hljs-comment">//1.通过上述方法避免了两个链表长度不相等的情况。</span><br> <span class="hljs-comment">//2.如果两个链表没有交点，n1 n2最后都为空，null==null</span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">ListNode</span>&#125; <span class="hljs-variable">headA</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">ListNode</span>&#125; <span class="hljs-variable">headB</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">ListNode</span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> getIntersectionNode = <span class="hljs-keyword">function</span>(<span class="hljs-params">headA, headB</span>) &#123;<br>    <span class="hljs-keyword">let</span> n1 = headA<br>    <span class="hljs-keyword">let</span> n2 = headB<br>    <span class="hljs-keyword">while</span>(n1 !== n2)&#123;<br>        <span class="hljs-keyword">if</span>(n1 === <span class="hljs-literal">null</span>)&#123;<br>            n1 = headB<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            n1 = n1.<span class="hljs-property">next</span><br>        &#125;<br><br>        <span class="hljs-keyword">if</span>(n2 === <span class="hljs-literal">null</span>)&#123;<br>            n2 = headA<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            n2 = n2.<span class="hljs-property">next</span><br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> n1<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 
                 
@@ -330,8 +320,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>leetcode-day11</div>
-      <div>http://example.com/2024/07/22/leetcode-day11/</div>
+      <div>leetcode-day14</div>
+      <div>http://example.com/2024/07/24/leetcode-day14/</div>
     </div>
     <div class="license-meta">
       
@@ -343,7 +333,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>July 22, 2024</div>
+          <div>July 24, 2024</div>
         </div>
       
       
@@ -375,18 +365,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="../leetcode-day12/" title="leetcode-day12">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">leetcode-day12</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="../leetcode-day10/" title="leetcode-day10">
-                        <span class="hidden-mobile">leetcode-day10</span>
+                      <a href="../../23/Object-keys%E4%B8%8EObject-values%E6%96%B9%E6%B3%95/" title="Object.keys与Object.values方法及注意点">
+                        <span class="hidden-mobile">Object.keys与Object.values方法及注意点</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
